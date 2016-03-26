@@ -14,20 +14,15 @@ defmodule Homebody.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :nerves_ssdp_server, :nerves_ssdp_client, :thermex],
      mod: {Homebody, []}]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:thermex, "~> 0.0.1"},
+      {:nerves_ssdp_server, git: "https://github.com/nerves-project/nerves_ssdp_server", tag: "v0.2.0"},
+      {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client", branch: "master"},
+    ]
   end
 end
