@@ -6,9 +6,10 @@ defmodule Homebody do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    Nerves.SSDPServer.publish(Node.self, "beam")
+
     children = [
-      # Define workers and child supervisors to be supervised
-      # worker(Homebody.Worker, [arg1, arg2, arg3]),
+      worker(Homebody.Connector, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
