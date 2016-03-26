@@ -27,6 +27,9 @@ defmodule Homebody.Connector do
   end
 
   defp discover_nodes do
-    Nerves.SSDPClient.discover(target: "beam") |> Map.keys
+    Nerves.SSDPClient.discover(target: "beam")
+    |> Map.keys
+    |> Enum.filter(fn(nil) -> false
+                       (_) -> true end)
   end
 end
