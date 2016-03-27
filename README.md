@@ -46,6 +46,13 @@ export PATH=/opt/elixir-1.2.3/bin:$PATH
 /opt/elixir-1.2.3/bin/mix local.rebar --force
 ```
 
-* Clone this repo to `git clone https://github.com/mmmries/homebody.git /opt/homebody`
-* `cp /opt/homebody/homebody.conf /etc/init`
-* `start homebody`
+Clone and setup this project
+
+```
+git clone https://github.com/mmmries/homebody.git /opt/homebody
+cd /opt/homebody
+mix deps.get
+MIX_ENV=prod mix compile
+cp /opt/homebody/homebody.conf /etc/init
+start homebody
+```
