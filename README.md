@@ -20,7 +20,24 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## Up and Running
 
-* Get Elixir running on the pi
-* Clone this repo to `/opt/homebody`
+Get elixir running on the Pi. Run all these commands as root.
+
+```
+echo "deb http://packages.erlang-solutions.com/debian wheezy contrib" >> /etc/apt/sources.list
+wget http://packages.erlang-solutions.com/debian/erlang_solutions.asc
+sudo apt-key add erlang_solutions.asc && rm erlang_solutions.asc
+sudo apt-get update
+apt-get install -y --force-yes erlang-mini upstart htop git vim
+mkdir /opt/elixir-1.2.3
+curl  -L https://github.com/elixir-lang/elixir/releases/download/v1.2.3/Precompiled.zip -o /opt/elixir-1.2.3/precompiled.zip
+cd /opt/elixir-1.2.3
+unzip precompiled.zip
+echo 'export PATH=/opt/elixir-1.2.3/bin:$PATH' >> /etc/bash.bashrc
+export PATH=/opt/elixir-1.2.3/bin:$PATH
+/opt/elixir-1.2.3/bin/mix local.hex --force
+/opt/elixir-1.2.3/bin/mix local.rebar --force
+```
+
+* Clone this repo to `git clone https://github.com/mmmries/homebody.git /opt/homebody`
 * `cp /opt/homebody/homebody.conf /etc/init`
 * `start homebody`
