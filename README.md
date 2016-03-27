@@ -20,7 +20,15 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
 ## Up and Running
 
-Get elixir running on the Pi. Run all these commands as root.
+First make sure that your pi has support for the 1-wire protocol by editing `/boot/config.txt` and adding:
+
+```
+dtoverlay=w1-gpio
+```
+
+Then reboot it with `sudo reboot`.
+
+Next get elixir running on the Pi. Run all these commands as root.
 
 ```
 echo "deb http://packages.erlang-solutions.com/debian wheezy contrib" >> /etc/apt/sources.list
