@@ -1,3 +1,3 @@
 %{"nerves_ssdp_client": {:git, "https://github.com/nerves-project/nerves_ssdp_client", "527c571c0f148da7cf8fb1b8bfaed569192b4843", [branch: "master"]},
   "nerves_ssdp_server": {:git, "https://github.com/nerves-project/nerves_ssdp_server", "20bbd6e355b73a45eaca852a7b614e3e29e45b45", [tag: "v0.2.0"]},
-  "thermex": {:hex, :thermex, "0.0.1"}}
+  "thermex": {:hex, :thermex, "0.0.2"}}

@@ -18,3 +18,9 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           [applications: [:homebody]]
         end
 
+## Up and Running
+
+* Get Elixir running on the pi
+* Clone this repo to `/opt/homebody`
+* `cp /opt/homebody/homebody.conf /etc/init`
+* `start homebody`
