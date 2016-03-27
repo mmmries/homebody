@@ -8,9 +8,10 @@ defmodule Homebody do
 
     Nerves.SSDPServer.publish(Node.self, "beam")
 
-    children = [
-      worker(Homebody.Connector, []),
-    ]
+    children = case Application.get_env(:homebody, :reporting) do
+      nil -> [worker(Homebody.Connector, [])]
+      [url: url] -> [worker(Homebody.Connector, []), worker(Homebody.Reporter, [url])]
+    end
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
