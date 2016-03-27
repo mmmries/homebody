@@ -24,7 +24,8 @@ defmodule Homebody.Reporter do
     body = measurements
            |> Enum.map(&measurement_to_line/1)
            |> Enum.join("\n")
-    :hackney.request(:post, url, [], body, []) |> IO.inspect
+    {:ok, _status_code, _headers, client_ref} = :hackney.request(:post, url, [], body, []) |> IO.inspect
+    {:ok, _body} = :hackney.body(client_ref)
     {:noreply, %{state | measurements: []}}
   end
 
