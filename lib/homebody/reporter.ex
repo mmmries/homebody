@@ -13,6 +13,10 @@ defmodule Homebody.Reporter do
     {:ok, %{url: url, measurements: []}}
   end
 
+  def celsius_to_faranheit(celsius) do
+    32.0 + ((212.0 - 32.0) / 100.0 * celsius)
+  end
+
   def handle_info({_, _, _}=measurement, %{measurements: measurements}=state) do
     {:noreply, %{state | measurements: [measurement | measurements]}}
   end
