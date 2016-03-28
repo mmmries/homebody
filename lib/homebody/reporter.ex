@@ -38,7 +38,8 @@ defmodule Homebody.Reporter do
     {:noreply, state}
   end
 
-  defp measurement_to_line({serial, temperature, timestamp}) do
-    "temperature,sensor=#{serial} value=#{temperature} #{timestamp}000000"
+  defp measurement_to_line({serial, celsius, timestamp}) do
+    faranheit = celsius_to_faranheit(celsius)
+    "temperature,sensor=#{serial} value=#{faranheit} #{timestamp}000000"
   end
 end
