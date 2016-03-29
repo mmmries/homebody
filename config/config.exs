@@ -32,3 +32,4 @@ use Mix.Config
 # Whichever node you want to collect and report the measurements needs to setup the following config
 # config :homebody, :reporting,
 #   url: "http://influxdb/write?db=some_db
+# config :homebody, :sensor_aliases, %{"00000761c6d0" => "master bedroom"}

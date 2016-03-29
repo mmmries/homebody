@@ -40,6 +40,16 @@ defmodule Homebody.Reporter do
 
   defp measurement_to_line({serial, celsius, timestamp}) do
     faranheit = celsius_to_faranheit(celsius)
-    "temperature,sensor=#{serial} value=#{faranheit} #{timestamp}000000"
+    case room_name(serial) do
+      nil ->
+        "temperature,sensor=#{serial} value=#{faranheit} #{timestamp}000000"
+      room_name ->
+        "temperature,room=#{room_name} value=#{faranheit} #{timestamp}000000"
+    end
+  end
+
+  defp room_name(serial) do
+    Application.get_env(:homebody, :sensor_aliases, %{})
+    |> Map.get(serial)
   end
 end
