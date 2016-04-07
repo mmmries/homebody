@@ -23,7 +23,7 @@ defmodule Homebody.Mixfile do
       {:hackney, "~> 1.6"},
       {:thermex, "~> 0.0.1"},
       {:nerves_ssdp_server, git: "https://github.com/nerves-project/nerves_ssdp_server", tag: "v0.2.0"},
-      {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client", branch: "master"},
+      {:nerves_ssdp_client, git: "https://github.com/nerves-project/nerves_ssdp_client", tag: "v0.1.2"},
     ]
   end
 end
