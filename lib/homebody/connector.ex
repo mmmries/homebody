@@ -1,7 +1,7 @@
 defmodule Homebody.Connector do
   use GenServer
   require Logger
-  @check_interval 10_000
+  @check_interval 30_000
 
   def start_link do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
@@ -12,27 +12,36 @@ defmodule Homebody.Connector do
   end
 
   def handle_info(:timeout, state) do
-    Logger.info "#{__MODULE__} going to discover new nodes (currently connected to #{inspect Node.list}"
     discover_nodes
     |> attempt_to_connect_to_nodes
     {:noreply, state, @check_interval}
   end
 
+  defp add_host_entry_for_node(node_name, %{host: ip_addr}) do
+    Logger.info "adding host entry for #{node_name} (#{ip_addr})"
+    {:ok, ip} = ip_addr |> String.to_char_list |> :inet.parse_ipv4_address
+    [_, hostname] = String.split(node_name, "@")
+    hostname = String.to_char_list(hostname)
+    :ok = :inet_db.add_host(ip, [hostname])
+  end
+
   defp attempt_to_connect_to_nodes(nodes) do
-    Logger.info "#{__MODULE__} attempting to connect to #{inspect nodes}"
     nodes
-    |> Enum.map(&(String.to_atom(&1)))
-    |> Enum.each(fn(node) ->
-      unless node in [Node.self | Node.list] do
-        Node.connect(node)
+    |> Enum.each(fn({node_name, meta}) ->
+      node_atom = String.to_atom(node_name)
+      unless node_atom in Node.list do
+        add_host_entry_for_node(node_name, meta)
+        Logger.info "attempting connection to #{node_name}"
+        Node.connect(node_atom)
       end
     end)
   end
 
   defp discover_nodes do
-    Nerves.SSDPClient.discover(target: "beam")
-    |> Map.keys
-    |> Enum.filter(fn(nil) -> false
-                       (_) -> true end)
+    current_node = Node.self |> Atom.to_string
+    Nerves.SSDPClient.discover(target: Homebody.service_name)
+    |> Enum.filter(fn({nil,_}) -> false
+                      ({^current_node, _}) -> false
+                       ({_,_}) -> true end)
   end
 end

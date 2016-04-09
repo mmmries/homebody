@@ -6,7 +6,8 @@ defmodule Homebody do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    Nerves.SSDPServer.publish(Node.self, "beam")
+    Nerves.SSDPServer.publish(Node.self, service_name)
+    :inet_db.set_lookup([:file, :dns]) # prefer host entries to DNS lookup
 
     children = case Application.get_env(:homebody, :reporting) do
       nil -> [worker(Homebody.Connector, [])]
@@ -18,4 +19,6 @@ defmodule Homebody do
     opts = [strategy: :one_for_one, name: Homebody.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def service_name, do: "homebody._tcp"
 end
