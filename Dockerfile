@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-buildpack-deps:jessie-20160401
+FROM resin/rpi-raspbian:jessie-20160401
 ENV PATH /opt/elixir/bin:$PATH
 ENV LANG C.UTF-8
 ENV MIX_ENV production
