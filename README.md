@@ -37,7 +37,7 @@ sudo apt-key add erlang_solutions.asc && rm erlang_solutions.asc
 sudo apt-get update
 apt-get install -y --force-yes erlang-mini upstart htop git vim
 mkdir /opt/elixir
-curl  -L https://github.com/elixir-lang/elixir/releases/download/v1.2.3/Precompiled.zip -o /opt/elixir/precompiled.zip
+curl  -L https://github.com/elixir-lang/elixir/releases/download/v1.2.4/Precompiled.zip -o /opt/elixir/precompiled.zip
 cd /opt/elixir
 unzip precompiled.zip
 echo 'export PATH=/opt/elixir/bin:$PATH' >> /etc/bash.bashrc
