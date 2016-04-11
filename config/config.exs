@@ -30,6 +30,11 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 # Whichever node you want to collect and report the measurements needs to setup the following config
-# config :homebody, :reporting,
-#   url: "http://influxdb/write?db=some_db
-# config :homebody, :sensor_aliases, %{"00000761c6d0" => "master bedroom"}
+if System.get_env("homebody.reporting.url") do
+  config :homebody, :reporting,
+    url: System.get_env("homebody.reporting.url")
+end
+if System.get_env("homebody.sensor_aliases") do
+  {aliases, []} = System.get_env("homebody.sensor_aliases") |> Code.eval_string
+  config :homebody, :sensor_aliases, aliases
+end
