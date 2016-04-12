@@ -3,6 +3,6 @@ defmodule HomebodyTest do
   doctest Homebody
 
   test "the truth" do
-    assert 1 + 1 == 2
+    assert Homebody.service_name == "homebody._tcp"
   end
 end
