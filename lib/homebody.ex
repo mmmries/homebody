@@ -37,7 +37,7 @@ defmodule Homebody do
       list ++ [
         worker(Blinky.Scheduler, [[name: :scheduler]]),
         worker(Blinky.Gpio, [Application.get_env(Blinky, :keep_sleeping_pin), [name: :keep_sleeping]], id: :keep_sleeping),
-        worker(Blinky.Gpio, [Application.get_env(Blinky, :wakeup_pin), [name: :wakeup]], id: :wakeup),
+        worker(Blinky.Gpio, [Application.get_env(Blinky, :wakeup_pin), [name: :time_to_wakeup]], id: :time_to_wakeup),
       ]
     else
       list
