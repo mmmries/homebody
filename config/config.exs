@@ -44,5 +44,5 @@ if System.get_env("blinky_sleeping_range") do
     keep_sleeping_range: System.get_env("blinky_sleeping_range") |> Code.eval_string,
     time_to_wakeup_range: System.get_env("blinky_wakeup_range") |> Code.eval_string,
     keep_sleeping_pin: System.get_env("blinky_sleeping_pin") |> Code.eval_string,
-    wakeup_pin: System.get_env("blinky_wakeup_ping") |> Code.eval_string
+    wakeup_pin: System.get_env("blinky_wakeup_pin") |> Code.eval_string
 end
