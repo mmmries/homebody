@@ -12,8 +12,8 @@ defmodule Blinky.Scheduler do
 
   def time_to_state(time) do
     cond do
-      time in keep_sleeping_range -> :keep_sleeping
-      time in time_to_wakeup_range -> :time_to_wakeup
+      time > keep_sleeping_start and time < keep_sleeping_end -> :keep_sleeping
+      time > time_to_wakeup_start and time < time_to_wakeup_end -> :time_to_wakeup
       true -> :idle
     end
   end
@@ -61,11 +61,16 @@ defmodule Blinky.Scheduler do
     Blinky.Gpio.turn_off(:time_to_wakeup)
   end
 
-  defp keep_sleeping_range do
-    Application.get_env(Blinky, :keep_sleeping_range, Range.new({5,30,0},{7,14,59}))
+  defp keep_sleeping_start do
+    Application.get_env(Blinky, :keep_sleeping_start, {5,30,0})
   end
-
-  defp time_to_wakeup_range do
-    Application.get_env(Blinky, :time_to_wakeup_range, Range.new({7,15,0},{8,29,59}))
+  defp keep_sleeping_end do
+    Application.get_env(Blinky, :keep_sleeping_end, {7, 14, 59})
+  end
+  defp time_to_wakeup_start do
+    Application.get_env(Blinky, :time_to_wakeup_start, {7,15,0})
+  end
+  defp time_to_wakeup_end do
+    Application.get_env(Blinky, :time_to_wakeup_end, {8,29,59})
   end
 end
