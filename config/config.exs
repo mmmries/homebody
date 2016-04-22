@@ -30,11 +30,11 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 # Whichever node you want to collect and report the measurements needs to setup the following config
-if System.get_env("homebody.reporting.url") do
+if System_get_env("homebody_reporting_url") do
   config :homebody, :reporting,
-    url: System.get_env("homebody.reporting.url")
+    url: System_get_env("homebody_reporting_url")
 end
-if System.get_env("homebody.sensor_aliases") do
-  {aliases, []} = System.get_env("homebody.sensor_aliases") |> Code.eval_string
+if System_get_env("homebody_sensor_aliases") do
+  {aliases, []} = System_get_env("homebody_sensor_aliases") |> Code_eval_string
   config :homebody, :sensor_aliases, aliases
 end
