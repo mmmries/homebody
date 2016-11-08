@@ -18,7 +18,7 @@ defmodule Homebody.Recorder do
   end
 
   def handle_info({serial, celsius, timestamp}, %{measurements: measurements}=state) do
-    
+    measurement = {serial, celsius_to_faranheit(celsius), timestamp}
     {:noreply, %{state | measurements: [measurement | measurements]}}
   end
 
