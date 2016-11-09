@@ -12,8 +12,8 @@ defmodule Blinky.Scheduler do
 
   def time_to_state(time) do
     cond do
-      time > keep_sleeping_start and time < keep_sleeping_end -> :keep_sleeping
-      time > time_to_wakeup_start and time < time_to_wakeup_end -> :time_to_wakeup
+      keep_sleeping_time?(time) -> :keep_sleeping
+      wakeup_time?(time) -> :time_to_wakeup
       true -> :idle
     end
   end
@@ -35,7 +35,8 @@ defmodule Blinky.Scheduler do
   end
 
   def handle_info(:timeout, current_state) do
-    expected_state = time_to_state(:erlang.time())
+    time = Timex.now(Blinky.timezone()) |> DateTime.to_time |> Time.to_erl
+    expected_state = time_to_state(time)
     cond do
       expected_state == current_state ->
         {:noreply, current_state, @interval}
@@ -61,16 +62,12 @@ defmodule Blinky.Scheduler do
     Blinky.Gpio.turn_off(:time_to_wakeup)
   end
 
-  defp keep_sleeping_start do
-    Application.get_env(Blinky, :keep_sleeping_start, {5,30,0})
+  defp keep_sleeping_time?(time) do
+    {lower, upper} = Blinky.keep_sleeping_bounds
+    time >= lower && time <= upper
   end
-  defp keep_sleeping_end do
-    Application.get_env(Blinky, :keep_sleeping_end, {7, 14, 59})
-  end
-  defp time_to_wakeup_start do
-    Application.get_env(Blinky, :time_to_wakeup_start, {7,15,0})
-  end
-  defp time_to_wakeup_end do
-    Application.get_env(Blinky, :time_to_wakeup_end, {8,29,59})
+  defp wakeup_time?(time) do
+    {lower, upper} = Blinky.wakeup_bounds
+    time >= lower && time <= upper
   end
 end
