@@ -21,7 +21,9 @@ RUN apt-get update && apt-get install -y \
   && mix local.hex --force \
   && mix local.rebar --force \
   && rm -rf /var/lib/apt/lists/*
-COPY . /app
 WORKDIR /app
-RUN mix hex.registry fetch && mix deps.get && mix compile
+ADD mix.lock mix.exs /app/
+RUN mix deps.get && mix compile
+ADD . /app
+RUN mix compile
 CMD modprobe w1-gpio && modprobe w1-therm && elixir --name "homebody@$RESIN_DEVICE_UUID.local" --cookie pi -S mix run --no-halt --no-deps-check
