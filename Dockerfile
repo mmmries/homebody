@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
   && apt-get update \
   && apt-get install -y --force-yes erlang-mini \
   && mkdir /opt/elixir \
-  && curl -k -L https://github.com/elixir-lang/elixir/releases/download/v1.2.4/Precompiled.zip -o /opt/elixir/precompiled.zip \
+  && curl -k -L https://github.com/elixir-lang/elixir/releases/download/v1.3.4/Precompiled.zip -o /opt/elixir/precompiled.zip \
   && cd /opt/elixir \
   && unzip precompiled.zip \
   && mix local.hex --force \
