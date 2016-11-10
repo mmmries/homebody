@@ -39,7 +39,7 @@ if System.get_env("homebody_sensor_aliases") do
   config :homebody, :sensor_aliases, aliases
 end
 
-if System.get_env("blinky_sleeping_start") do
+if System.get_env("blinky_wakeup_pin") do
   config Blinky,
     timezone: System.get_env("timezone"),
     keep_sleeping_bounds: System.get_env("keep_sleeping_bounds") |> Code.eval_string |> elem(0),

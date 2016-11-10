@@ -33,7 +33,7 @@ defmodule Homebody do
   end
 
   defp blinky_children(list) do
-    if Application.get_env(Blinky, :keep_sleeping_pin) do
+    if Blinky.start_application? do
       list ++ [
         worker(Blinky.Scheduler, [[name: :scheduler]]),
         worker(Blinky.Gpio, [Application.get_env(Blinky, :keep_sleeping_pin), [name: :keep_sleeping]], id: :keep_sleeping),
