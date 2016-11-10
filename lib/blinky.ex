@@ -1,6 +1,6 @@
 defmodule Blinky do
   def keep_sleeping_bounds do
-    Application.get_env(Blinky, :wakeup_bounds, { {5,30,0}, {7,19,59} })
+    Application.get_env(Blinky, :keep_sleeping_bounds, { {5,30,0}, {7,19,59} })
   end
 
   def keep_sleeping_pin do
